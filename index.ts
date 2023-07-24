@@ -10,7 +10,7 @@ import { AppDataSource } from './src/services/webservice.db';
 const totalCPUs: number = os.cpus().length;
 dotenv.config();
 
-const port = process.env.APP_PORT || 3000;
+const port = process.env.APP_PORT || 8080;
 
 
 if (cluster.isPrimary) {
@@ -38,7 +38,7 @@ if (cluster.isPrimary) {
     AppDataSource.initialize().then((AppDataSource)=> {
         console.log("DataSource Client Initialised ...")
     }).catch((err) =>{
-        console.log(err)
+        console.log(`Error while connecting to db - > ${err}`)
     })
 
 

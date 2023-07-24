@@ -28,7 +28,9 @@ export class Contact {
     @Column()
     email!: string
 
-    @Column()
+    @Column({
+        type: "varchar"
+    })
     linkedId!: number|number[]|null
 
     @Column({

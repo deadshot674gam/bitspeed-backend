@@ -108,6 +108,8 @@ function build() {
             echo "Application Build Failed Aborting :("
             return 1
         fi
+
+        cp .env target/
         
 
         if [[ $1 -eq "docker" ]]; then
@@ -181,6 +183,16 @@ function restart() {
     build_and_start_local
 }
 
+function start_docker() {
+    build docker
+
+    echo "Composing Docker MYSQL..."
+    docker-compose up mysqldb > /dev/null 2>&1 &
+
+    docker-compose up --build app
+
+}
+
 
 if [ $# -eq 0 ]; then
     installnode
@@ -190,6 +202,7 @@ else
     "stop") stopApp ;;
     "restart") restart ;;
     "build") build $2 ;;
+    "start-docker") start_docker ;;
     "download") downloaddependencies ;;
     "installnode") installnode ;;
     "-h") help ;;
