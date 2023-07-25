@@ -1,6 +1,6 @@
 import cluster from 'cluster';
 import os from 'os'
-import { debuggingMiddlware, rateLimiterUsingThirdParty } from './src/middlewares/webservice.middleware';
+import { contentTypeHandler, debuggingMiddlware, rateLimiterUsingThirdParty } from './src/middlewares/webservice.middleware';
 import dotenv from 'dotenv'
 import express, { Express, Router } from 'express';
 import { AppDataSource } from './src/services/webservice.db';
@@ -17,6 +17,8 @@ const port = process.env.APP_PORT || 8080;
 const SERVER: Express = express();
 /* registering middlewares */
 SERVER.use(rateLimiterUsingThirdParty);
+SERVER.use(contentTypeHandler)
+
 
 SERVER.get('/', debuggingMiddlware, (req, res) => {
     res.json({ 'status': 'RUNNING' });
