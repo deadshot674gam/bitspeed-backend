@@ -188,7 +188,7 @@ function start_docker() {
 
     echo "Composing Docker MYSQL..."
     docker-compose up mysqldb > /dev/null 2>&1 &
-
+    sleep 10
     docker-compose up --build app
 
 }

@@ -13,9 +13,11 @@ RUN npm install --omit=dev
 
 COPY target/ ./
 
+# RUN npm install -g typeorm
+
 EXPOSE 8080
 
-RUN ls -ltrha
 
+# RUN typeorm schema:sync --dataSource src/services/webservice.db.js
 
-CMD [ "node", "index.js" ]
+CMD [ "node", "index.js", ">> logs/app.log"]

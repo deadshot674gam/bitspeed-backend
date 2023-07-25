@@ -6,8 +6,6 @@ node_modules/
 # Compiled Typescript OutDir
 target/
 
-.env
-
 logs/
 
 *.zip

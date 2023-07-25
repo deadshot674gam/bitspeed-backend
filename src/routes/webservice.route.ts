@@ -1,4 +1,9 @@
 import { Router } from "express";
+import { identify } from "../controllers/webservice.controller";
 
 
-export const ROUTER = Router();
+const ROUTER = Router();
+
+ROUTER.put('/identify', identify)
+
+export default ROUTER

@@ -2,7 +2,7 @@ version: '3.8'
 
 services: 
   mysqldb:
-    image: mysql
+    image: mysql:8
     restart: always
     env_file: ./.env
     environment:
@@ -25,6 +25,8 @@ services:
       - mysqldb
     stdin_open: true
     tty: true
+    ports:
+      - 8080:8080
 
 volumes: 
   db-config:

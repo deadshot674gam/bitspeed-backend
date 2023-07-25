@@ -1,9 +1,21 @@
 import rateLimit from 'express-rate-limit';
+import { NextFunction, Request, Response } from "express";
+import { AppDataSource } from '../services/webservice.db';
+import { Contact } from '../models/Contact';
+import { Log } from "../utils/webservice.util";
+const LOGGER = new Log("middlware").logger
 
 export const rateLimiterUsingThirdParty = rateLimit({
-  windowMs: 10000, // 24 hrs in milliseconds
+  windowMs: 10000, // 10 Milliseconds
   max: 10000,
   message: 'You have exceeded the 10000 requests in 10 seconds limit!', 
   standardHeaders: true,
   legacyHeaders: false,
 });
+
+export async function debuggingMiddlware(req: Request, res: Response, next: NextFunction) {
+  let contacts = AppDataSource.getRepository(Contact)
+  LOGGER.info(` This is db -> ${JSON.stringify(await contacts.find())}`)
+
+  next();
+}

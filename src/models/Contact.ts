@@ -1,8 +1,8 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 
 
-enum LINKEDPRECEDENCE {
+export enum LINKEDPRECEDENCE {
     PRIMARY,
     SECONDARY
 }
@@ -20,18 +20,19 @@ export class Contact {
     @PrimaryGeneratedColumn({
         type: "int",
     })
-    id!: number
+    id?: number
 
-    @Column()
+    @PrimaryColumn()
     phoneNumber!: string
 
-    @Column()
+    @PrimaryColumn()
     email!: string
 
     @Column({
-        type: "varchar"
+        type: "varchar",
+        nullable: true
     })
-    linkedId!: number|number[]|null
+    linkedId!: number| null
 
     @Column({
         type: 'enum',
@@ -40,13 +41,13 @@ export class Contact {
     linkPrecedence!: LINKEDPRECEDENCE
 
     @CreateDateColumn()
-    createdAt! : Date
+    createdAt? : Date
 
     @UpdateDateColumn()
-    updatedAt!: Date
+    updatedAt?: Date
 
     @DeleteDateColumn()
-    deletedAt!: Date
+    deletedAt?: Date
 
 }
 

@@ -1,0 +1,32 @@
+{
+    "appenders": {
+        "dateFile": {
+            "type": "file",
+            "filename": "./logs/app.log",
+            "layout": {
+                "type": "pattern",
+                "pattern": "%d{yyyy-MM-dd hh.mm.ss} %p %c.%M:%l %m"
+            },
+            "compress": true,
+            "numBackups": 20,
+            "keepFileExt": true,
+            "maxLogSize": "100M"
+        }
+    },
+    "categories": {
+        "default" : {
+            "appenders": [
+                "dateFile"
+            ],
+            "level": "trace",
+            "enableCallStack": true
+        },
+        "Main": {
+            "appenders": [
+                "dateFile"
+            ],
+            "level": "trace",
+            "enableCallStack": true
+        }
+    }
+}
