@@ -25,3 +25,11 @@ export async function debuggingMiddlware(req: Request, res: Response, next: Next
 
   next();
 }
+
+export async function contentTypeHandler(req: Request, res: Response, next: NextFunction) {
+  if(req.headers["content-type"] === "application/json") next();
+  else res.send({
+    status: 302,
+    body: "Application/JSON required"
+  })
+}
