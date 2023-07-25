@@ -13,9 +13,15 @@ export const rateLimiterUsingThirdParty = rateLimit({
   legacyHeaders: false,
 });
 
+/**
+ * @description a middlware for checking DB content 
+ * @param req 
+ * @param res 
+ * @param next 
+ */
 export async function debuggingMiddlware(req: Request, res: Response, next: NextFunction) {
   let contacts = AppDataSource.getRepository(Contact)
-  LOGGER.info(` This is db -> ${JSON.stringify(await contacts.find())}`)
+  LOGGER.trace(` This is db -> ${JSON.stringify(await contacts.find())}`)
 
   next();
 }

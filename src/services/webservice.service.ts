@@ -5,6 +5,10 @@ const LOGGER = new Log("webservice.service").logger
 
 export const CONTACTS: Contact[] = []
 
+
+/**
+ * @description initialises the Cache for DB
+ */
 export async function initCache() {
     let contacts = AppDataSource.getRepository(Contact)
     let contactsALL = await contacts.find()
@@ -14,18 +18,28 @@ export async function initCache() {
     })
 }
 
+/**
+ * 
+ * @param query 
+ * @returns returns true if query matches record as PRIMARY in Cache
+ */
 export async function checkIfExistingPrimary(query: EQuery): Promise<boolean> {
 
     let findContacts = CONTACTS.filter((contact) => {
         return (contact["email"] === query["email"] && contact["linkPrecedence"] === LINKEDPRECEDENCE.PRIMARY) || (contact["phoneNumber"] === query["phoneNumber"] && contact["linkPrecedence"] === LINKEDPRECEDENCE.PRIMARY)
     })
 
-    console.log(`This is output -> ${JSON.stringify(findContacts)}`)
+    LOGGER.trace(`This is output -> ${JSON.stringify(findContacts)}`)
 
     return findContacts !== null && findContacts.length > 0
 }
 
 
+/**
+ * 
+ * @param query 
+ * @returns true if Duplicate contact exists
+ */
 export function duplicateExist(query: EQuery): boolean {
     return CONTACTS.filter((contact) => {
         return contact["email"] === query["email"] && contact["phoneNumber"] === query["phoneNumber"]
@@ -33,6 +47,12 @@ export function duplicateExist(query: EQuery): boolean {
 }
 
 
+/**
+ * 
+ * @param query 
+ * @param isPrimary true if this is primary insert
+ * @returns Promise<void>
+ */
 export async function insertDB(query: EQuery, isPrimary: boolean) {
     if (duplicateExist(query)) return;
 
@@ -46,7 +66,7 @@ export async function insertDB(query: EQuery, isPrimary: boolean) {
             linkedId: null,
             linkPrecedence: LINKEDPRECEDENCE.PRIMARY
         }
-        console.log(`This is to be inserted -> ${JSON.stringify(contact)}`)
+        LOGGER.trace(`This is to be inserted -> ${JSON.stringify(contact)}`)
 
         CONTACTS.push(contact)
         await contacts.save(contact)
@@ -70,14 +90,14 @@ export async function insertDB(query: EQuery, isPrimary: boolean) {
         })
 
         if (primaryContact !== null && primaryContact["id"]) {
-            LOGGER.info(JSON.stringify(primaryContact))
+            LOGGER.trace(JSON.stringify(primaryContact))
             var contact: Contact = {
                 email: query["email"],
                 phoneNumber: query["phoneNumber"],
                 linkedId: primaryContact["id"],
                 linkPrecedence: LINKEDPRECEDENCE.SECONDARY
             }
-            console.log(`This is to be inserted -> ${JSON.stringify(contact)}`)
+            LOGGER.trace(`This is to be inserted -> ${JSON.stringify(contact)}`)
             CONTACTS.push(contact)
             await contacts.insert(contact)
         }
@@ -86,6 +106,12 @@ export async function insertDB(query: EQuery, isPrimary: boolean) {
 
 }
 
+
+/**
+ * 
+ * @param query 
+ * @returns Promise<EResponse> expected response from bitespeed task
+ */
 export async function fetchRecords(query: EQuery): Promise<EResponse> {
     let contacts = AppDataSource.getRepository(Contact)
 
@@ -128,7 +154,7 @@ export async function fetchRecords(query: EQuery): Promise<EResponse> {
                 response["secondaryContactIds"].push(Number(result["id"]))
             }
         })
-        LOGGER.info(JSON.stringify(results))
+        LOGGER.trace(JSON.stringify(results))
 
     }
     return response

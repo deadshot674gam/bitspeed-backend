@@ -4,16 +4,23 @@ import { checkIfExistingPrimary, fetchRecords, insertDB } from "../services/webs
 import { Log } from "../utils/webservice.util";
 const LOGGER = new Log("Main").logger
 
+
+/**
+ * @description main endpoint
+ * @param req Request
+ * @param res Response
+ * @param next Next Function
+ */
 export async function identify(req: Request, res: Response, next: NextFunction) {
 
     if(validQuery(req)) {
         var query = parseQuery(req)
-        LOGGER.info(`Query received - ${JSON.stringify(query)}`)
+        LOGGER.trace(`Query received - ${JSON.stringify(query)}`)
         checkIfExistingPrimary(query).then((hasPrimary)=>{
-            LOGGER.info(`Result from checkIfExistingPrimary - > ${hasPrimary}`)
+            LOGGER.trace(`Result from checkIfExistingPrimary - > ${hasPrimary}`)
             insertDB(query, !hasPrimary).then(()=>{
                 fetchRecords(query).then((response)=>{
-                    LOGGER.info(`Response - > ${JSON.stringify(response)}`)
+                    LOGGER.trace(`Response - > ${JSON.stringify(response)}`) 
                     res.send({
                         "contacts" : response
                     })
@@ -29,7 +36,7 @@ export async function identify(req: Request, res: Response, next: NextFunction) 
             LOGGER.error(JSON.stringify(reason))
         })
     }else{
-        LOGGER.info("Not a valid Query")
+        LOGGER.trace("Not a valid Query")
         res.send("Not a Valid Query")
     }
     
