@@ -7,6 +7,8 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package*.json ./
 
+RUN npm install typescript
+
 RUN npm install --omit=dev
 
 COPY . .
