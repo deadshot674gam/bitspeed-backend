@@ -186,11 +186,15 @@ function restart() {
 function start_docker() {
     build docker
 
+    docker_compose
+
+}
+
+function docker_compose() {
     echo "Composing Docker MYSQL..."
     docker-compose up mysqldb > /dev/null 2>&1 &
     sleep 10
     docker-compose up --build app
-
 }
 
 
@@ -203,6 +207,7 @@ else
     "restart") restart ;;
     "build") build $2 ;;
     "start-docker") start_docker ;;
+    "docker-compose") docker_compose;;
     "download") downloaddependencies ;;
     "installnode") installnode ;;
     "-h") help ;;
