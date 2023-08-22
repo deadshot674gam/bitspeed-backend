@@ -16,6 +16,8 @@ const port = process.env.APP_PORT || 8080;
 
 const SERVER: Express = express();
 /* registering middlewares */
+
+SERVER.enable('trust proxy')
 SERVER.use(rateLimiterUsingThirdParty);
 SERVER.use(contentTypeHandler)
 
