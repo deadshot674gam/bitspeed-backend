@@ -9,3 +9,5 @@ target/
 logs/
 
 *.zip
+
+package-lock.json
