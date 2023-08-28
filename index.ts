@@ -18,7 +18,7 @@ const SERVER: Express = express();
 /* registering middlewares */
 
 SERVER.enable('trust proxy')
-SERVER.use(rateLimiterUsingThirdParty);
+// SERVER.use(rateLimiterUsingThirdParty);
 SERVER.use(contentTypeHandler)
 
 
