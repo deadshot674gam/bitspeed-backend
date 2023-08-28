@@ -14,5 +14,6 @@ export const AppDataSource = new DataSource({
     username: process.env.DB_USER,
     password: isBase64(process.env.DB_PASS)? fromBase64(process.env.DB_PASS) : process.env.DB_PASS,
     database: process.env.DB_SCHEMA,
-    entities: [Contact]
+    entities: [Contact],
+    ssl: true 
 })
