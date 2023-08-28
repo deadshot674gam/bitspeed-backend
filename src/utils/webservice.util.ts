@@ -1,6 +1,7 @@
 import { Request } from "express";
 import log4js, { Log4js, Logger} from "log4js"
 import log4json from '../config/log4j2.json'
+import { EQuery } from "../models/types";
 
 /**
  * 

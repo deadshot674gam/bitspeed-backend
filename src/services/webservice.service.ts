@@ -1,4 +1,5 @@
 import { Contact, LINKEDPRECEDENCE } from "../models/Contact";
+import { EQuery, EResponse } from "../models/types";
 import { Log } from "../utils/webservice.util";
 import { AppDataSource } from "./webservice.db";
 const LOGGER = new Log("webservice.service").logger
