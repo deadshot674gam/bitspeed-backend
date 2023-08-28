@@ -11,19 +11,22 @@
             "numBackups": 20,
             "keepFileExt": true,
             "maxLogSize": "100M"
+        },
+        "console": {
+            "type": "console"
         }
     },
     "categories": {
         "default" : {
             "appenders": [
-                "dateFile"
+                "console"
             ],
             "level": "trace",
             "enableCallStack": true
         },
         "Main": {
             "appenders": [
-                "dateFile"
+                "console"
             ],
             "level": "trace",
             "enableCallStack": true
