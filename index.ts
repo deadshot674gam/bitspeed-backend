@@ -1,6 +1,6 @@
 import cluster from 'cluster';
 import os from 'os'
-import { contentTypeHandler, debuggingMiddlware, rateLimiterUsingThirdParty } from './src/middlewares/webservice.middleware';
+import { contentTypeHandler, debuggingMiddlware } from './src/middlewares/webservice.middleware';
 import dotenv from 'dotenv'
 import express, { Express, Router } from 'express';
 import { AppDataSource } from './src/services/webservice.db';
